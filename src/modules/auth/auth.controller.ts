@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { authService } from "./auth.service";
 import sendResponse from "../../utility/sendResponse";
 
-const signUp = async (req: Request, res: Response) => {
+const signUpUser = async (req: Request, res: Response) => {
   try {
     const result = await authService.signUpUserService(req.body);
     sendResponse(res, {
@@ -19,6 +19,25 @@ const signUp = async (req: Request, res: Response) => {
   }
 };
 
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    const result = await authService.loginUserService(req.body);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Login successful",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      message: error.message,
+      error: error,
+    });
+  }
+};
+
 export const authController = {
-  signUp,
+  signUpUser,
+  loginUser,
 };
