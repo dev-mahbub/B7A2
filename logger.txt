@@ -1,0 +1,22 @@
+
+ Method-> GET - URL -> / - Time -> 1779436043203 
+
+ Method-> POST - URL -> /api/auth/signup - Time -> 1779436142576 
+
+ Method-> GET - URL -> / - Time -> 1779436143249 
+
+ Method-> GET - URL -> / - Time -> 1779436194164 
+
+ Method-> GET - URL -> / - Time -> 1779436203513 
+
+ Method-> POST - URL -> /api/auth/signup - Time -> 1779436214780 
+
+ Method-> GET - URL -> / - Time -> 1779436260615 
+
+ Method-> GET - URL -> / - Time -> 1779436305373 
+
+ Method-> GET - URL -> / - Time -> 1779436328944 
+
+ Method-> POST - URL -> /api/auth/signup - Time -> 1779436341284 
+
+ Method-> GET - URL -> / - Time -> 1779436514737 

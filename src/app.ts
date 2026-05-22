@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import logger from "./middleware/logger";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { userRoute } from "./modules/user/user.route";
+import { authRoute } from "./modules/auth/auth.route";
 
 const app = express();
 
@@ -18,6 +18,6 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
 
 export default app;

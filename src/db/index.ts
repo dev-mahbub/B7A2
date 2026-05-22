@@ -15,8 +15,8 @@ export const initDB = async () => {
         password TEXT NOT NULL,
         role VARCHAR(10) DEFAULT 'contributor',
 
-        created_at TIMESTAMP DATE NOW(),
-        updated_at TIMESTAMP DATE NOW()
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
 
         )
         `);
