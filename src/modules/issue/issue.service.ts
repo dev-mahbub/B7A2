@@ -3,6 +3,7 @@ import { pool } from "../../db";
 import type { IIssue } from "./issue.interface";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 
+//create issue
 const createIssueService = async (payload: IIssue, token: string) => {
   const { title, description, type, status } = payload;
   const decoded = jwt.verify(token, config.secret as string) as JwtPayload;
@@ -19,6 +20,7 @@ const createIssueService = async (payload: IIssue, token: string) => {
   return result;
 };
 
+//get all issue
 const getAllIssuesService = async (
   sort: string,
   type: string,
@@ -83,7 +85,43 @@ const getAllIssuesService = async (
   return formatted;
 };
 
+//get single issue
+const getSingleIssue = async (id: string) => {
+  const result = await pool.query(
+    `
+    SELECT * FROM issues WHERE id=$1
+    `,
+    [id],
+  );
+
+  // reporter logic
+  const reporterId = result.rows[0].id;
+
+  const usersResult = await pool.query(
+    `SELECT id, name, role FROM users WHERE id= $1`,
+    [reporterId],
+  );
+
+  // format response
+  const formatted = result.rows.map((issue) => ({
+    id: issue.id,
+    title: issue.title,
+    description: issue.description,
+    type: issue.type,
+    status: issue.status,
+    reporter: usersResult.rows[0] || null,
+    created_at: issue.created_at,
+    updated_at: issue.updated_at,
+  }));
+
+  return formatted;
+};
+
+const updateIssueService = async (id: string) => {};
+
 export const issueService = {
   createIssueService,
   getAllIssuesService,
+  getSingleIssue,
+  updateIssueService,
 };

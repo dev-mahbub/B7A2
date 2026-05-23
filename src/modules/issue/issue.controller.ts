@@ -48,7 +48,33 @@ const getAllIssues = async (req: Request, res: Response) => {
   }
 };
 
+const getSingleIssue = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const result = await issueService.getSingleIssue(id as string);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      message: error.message,
+      error: error,
+    });
+  }
+};
+
+const updateIssue = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const result = await issueService.updateIssueService(id as string);
+  } catch (error) {}
+};
+
 export const issueController = {
   createIssue,
   getAllIssues,
+  getSingleIssue,
+  updateIssue,
 };
