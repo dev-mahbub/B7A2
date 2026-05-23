@@ -8,7 +8,7 @@ const auth = (...roles: ROLES[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
     if (!token) {
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: "Unauthorize access!",
       });
@@ -38,7 +38,7 @@ const auth = (...roles: ROLES[]) => {
     const user = userData.rows[0];
 
     if (roles.length && !roles.includes(user.role)) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "Forbidden access",
       });

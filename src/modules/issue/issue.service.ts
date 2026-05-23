@@ -162,10 +162,10 @@ const updateIssueService = async (
     `
     UPDATE issues
     SET
-      title = COALESCE($1, title),
-      description = COALESCE($2, description),
-      type = COALESCE($3, type),
-      updated_at = NOW()
+    title = COALESCE($1, title),
+    description = COALESCE($2, description),
+    type = COALESCE($3, type),
+    updated_at = NOW()
     WHERE id = $4
     RETURNING *
     `,
