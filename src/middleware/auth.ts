@@ -6,11 +6,6 @@ import { pool } from "../db";
 
 const auth = (...roles: ROLES[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-    // 1. Check if the  token exists
-    // 2.Verify the token
-    // 3. Find the user into database
-    // 4.If the user is active or not
-    // 5.send the user into request
     const token = req.headers.authorization;
     if (!token) {
       res.status(500).json({
@@ -25,6 +20,7 @@ const auth = (...roles: ROLES[]) => {
     ) as JwtPayload;
 
     const { id } = decoded;
+    console.log("id", id);
 
     const userData = await pool.query(
       `
@@ -41,16 +37,11 @@ const auth = (...roles: ROLES[]) => {
     }
 
     const user = userData.rows[0];
-    // console.log("user", user);
-
-    // if (user.role === "contributor") {
-    //   console.log("first");
-    // }
 
     if (roles.length && !roles.includes(user.role)) {
       res.status(401).json({
         success: false,
-        message: "Unauthorize access",
+        message: "Forbidden access",
       });
     }
 

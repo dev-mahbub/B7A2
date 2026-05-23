@@ -178,7 +178,7 @@ const updateIssueService = async (
 const deleteIssue = async (id: string) => {
   const result = await pool.query(
     `
-    DELETE FROM user WHERE id=$1
+    DELETE FROM issues WHERE id=$1 RETURNING *
     `,
     [id],
   );

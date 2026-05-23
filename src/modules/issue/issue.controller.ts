@@ -93,7 +93,7 @@ const updateIssue = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: error.message || "Something went wrong",
+      message: error.message,
     });
   }
 };
@@ -106,7 +106,8 @@ const deleteIssue = async (req: Request, res: Response) => {
       sendResponse(res, {
         statusCode: 404,
         success: false,
-        message: "User not found",
+        message: "Issue not found",
+        data: {},
       });
     }
     sendResponse(res, {
