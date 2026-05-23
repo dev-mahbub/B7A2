@@ -1,4 +1,4 @@
-# DevPulse – Assignment
+# DevPulse
 
 A role-based Issue Tracking REST API built with **Node.js, Express, TypeScript, PostgreSQL, and JWT authentication**.  
 It supports role-based access control for Maintainers and Contributors to manage issues efficiently.
