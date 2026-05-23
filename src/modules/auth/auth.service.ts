@@ -7,6 +7,13 @@ import type { StringValue } from "ms";
 
 const signUpUserService = async (payload: IUser) => {
   const { name, email, password, role } = payload;
+  const isUserExist = await pool.query(`SELECT * FROM users WHERE email=$1`, [
+    email,
+  ]);
+
+  if (isUserExist.rows.length > 0) {
+    throw new Error("Email already exists");
+  }
   const hashPassword = await bcrypt.hash(password, 10);
   const result = await pool.query(
     `INSERT INTO users(name, email, password, role)

@@ -1,13 +1,14 @@
 import type { Request, Response } from "express";
 import { issueService } from "./issue.service";
-import sendResponse from "../../utility/sendResponse";
+import sendResponse from "../../utils/sendResponse";
 
 const createIssue = async (req: Request, res: Response) => {
   const token = req.headers.authorization;
   if (!token) {
-    res.status(500).json({
+    return sendResponse(res, {
+      statusCode: 401,
       success: false,
-      message: "Unauthorize access!",
+      message: "Unauthorized access!",
     });
   }
   try {
@@ -22,7 +23,9 @@ const createIssue = async (req: Request, res: Response) => {
       data: result.rows[0],
     });
   } catch (error: any) {
-    res.status(500).json({
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
       message: error.message,
       error: error,
     });
@@ -41,7 +44,9 @@ const getAllIssues = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: any) {
-    res.status(500).json({
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
       message: error.message,
       error: error,
     });
@@ -52,6 +57,13 @@ const getSingleIssue = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const result = await issueService.getSingleIssue(id as string);
+    if (!result) {
+      return sendResponse(res, {
+        statusCode: 404,
+        success: false,
+        message: "Issue not found",
+      });
+    }
     sendResponse(res, {
       statusCode: 200,
       success: true,
@@ -91,9 +103,11 @@ const updateIssue = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: any) {
-    res.status(500).json({
+    sendResponse(res, {
+      statusCode: 500,
       success: false,
       message: error.message,
+      error: error,
     });
   }
 };
